@@ -197,7 +197,7 @@ ul#menu li a:hover
   overflow: hidden;
   margin: 0 auto 0 auto;
   padding: 10px 20px 20px 20px;
-  background: #F6F6F0 url(back.png) repeat-y;
+  background: #F6F6F0 url("/style/back.png") repeat-y;
   border: 15px solid #FFF;} 
 
 .sidebar
@@ -217,7 +217,7 @@ ul#menu li a:hover
 .sidebar li a, .sidebar li a:hover
 { padding: 0 0 0 35px;
   display: block;
-  background: transparent url(link.png) no-repeat left center;
+  background: transparent url("/style/link.png") no-repeat left center;
   border: 0;} 
 
 .sidebar li a.selected
@@ -233,7 +233,7 @@ ul#menu li a:hover
 
 #content ul li
 { list-style-type: none;
-  background: url(bullet.png) no-repeat;
+  background: url("style/bullet.png") no-repeat;
   margin: 0 0 0 0; 
   padding: 0 0 4px 25px;
   line-height: 1.5em;}
