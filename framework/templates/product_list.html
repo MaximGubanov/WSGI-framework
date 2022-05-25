@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}  Список продуктов  {% endblock %}
+
+{% block style %}
+	{% include "inc-style.html" %}
+{% endblock %}
+
+{% block body %}
+    <!-- <div>
+        <a href="/">Назад на главную</a>
+    </div>
+
+    <br>
+    <br>
+
+    <div>
+        <a href="/create-product/?id={{ id }}">Создать новый продукт</a>
+        <br>
+        <h1>Список продуктов для категории "{{ name }}"</h1>
+            <ul>
+            {% for item in objects_list %}
+                <li>
+                    {{item.name}} <span><a href="/copy-product/?name={{item.name}}">Скопировать</a></span>
+                </li>
+            {% endfor %}
+            </ul>
+    </div> -->
+    <div>
+        <a href="/">назад на главную</a>
+    </div>
+
+    <br>
+    <br>
+
+    <div>
+        <a href="/create-product/?id={{id}}">Создать новый товар</a>
+        <br>
+        <h1>Список товаров для категории "{{name}}"</h1>
+        {% for item in objects_list %}
+        <li>
+            {{item.name}} <span><a href="/copy-product/?name={{item.name}}">Скопировать</a></span>
+        </li>
+        {% endfor %}
+    </div>
+{% endblock %}

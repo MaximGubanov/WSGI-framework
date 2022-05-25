@@ -1,5 +1,5 @@
 from datetime import date
-from views import Index, About, Contact
+from views import Index, About, Contact, ProductsList, CreateProduct, CreateCategory, CategoryList, CopyProduct
 
 
 # front controller
@@ -17,4 +17,9 @@ routes = {
     '/': Index(),
     '/about/': About(),
     '/contact/': Contact(),
+    '/products-list/': ProductsList(),
+    '/create-product/': CreateProduct(),
+    '/create-category/': CreateCategory(),
+    '/category-list/': CategoryList(),
+    '/copy-product/': CopyProduct(),
 }

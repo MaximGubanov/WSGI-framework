@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}  Список категорий  {% endblock %}
+
+{% block style %}
+	{% include "inc-style.html" %}
+{% endblock %}
+
+{% block body %}
+    <a href="/">назад</a>
+
+    <h1><a href="/create-category/">Создание новой категории</a></h1>
+    <h2>Список существующих категорий</h2><br>
+
+    <ul>
+        {% for item in objects_list %}
+        <li>
+            {{item.name}} <span>Количество продуктов: {{item.product_count()}}</span>
+            <span><a href="/products-list/">Показать продукты</a></span>
+        </li>
+        {% endfor %}
+    </ul>
+    <br>
+
+	<div>
+        <ul>
+            <li><a href="/products-list/">Список продуктов</a></li>
+		    <li><a href="/create-product/?id={{id}}">Создать продукт</a></li>
+        </ul>
+	</div>
+{% endblock %}
