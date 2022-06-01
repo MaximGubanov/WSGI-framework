@@ -2,24 +2,32 @@ from datetime import date
 
 from simba_framework.templator import render
 from patterns.creational_patterns import Engine, Logger
+from patterns.structural_patterns import AppRoute, Debug
 
 
 site = Engine()
 logger = Logger('main')
+routes = {}
 
 
 # контроллер - главная страница
+@AppRoute(routes=routes, url='/')
 class Index:
+    @Debug(name='Index')
     def __call__(self, request):
         return '200 OK', render('index.html', objects_list=site.categories)
 
 
+@AppRoute(routes=routes, url='/about/')
 class About:
+    @Debug(name='About')
     def __call__(self, request):
         return '200 OK', render('about.html', date=request.get('date', None))
 
 
+@AppRoute(routes=routes, url='/contact/')
 class Contact:
+    @Debug(name='Contact')
     def __call__(self, request):
         return '200 OK', render('contact.html', date=request.get('date', None))
 
@@ -31,7 +39,9 @@ class NotFound404:
 
 
 # контроллер - список продуктов
+@AppRoute(routes=routes, url='/products-list/')
 class ProductsList:
+    @Debug(name='ProductList')
     def __call__(self, request):
         logger.log('Список продуктов')
         try:
@@ -45,9 +55,11 @@ class ProductsList:
 
 
 # контроллер - создать продукт
+@AppRoute(routes=routes, url='/create-product/')
 class CreateProduct:
     category_id = -1
 
+    @Debug(name='CreateProduct')
     def __call__(self, request):
         logger.log('Создание продукта')
         if request['method'] == 'POST':
@@ -83,7 +95,9 @@ class CreateProduct:
 
 
 # контроллер - создать категорию
+@AppRoute(routes=routes, url='/create-category/')
 class CreateCategory:
+    @Debug(name='CreateCategory')
     def __call__(self, request):
         logger.log('Создание категории')
         if request['method'] == 'POST':
@@ -111,7 +125,9 @@ class CreateCategory:
 
 
 # контроллер - список категорий
+@AppRoute(routes=routes, url='/category-list/')
 class CategoryList:
+    @Debug(name='CategoryList')
     def __call__(self, request):
         logger.log('Список категорий')
         return '200 OK', render('category_list.html',
@@ -119,7 +135,9 @@ class CategoryList:
 
 
 # контроллер - копировать продукт
+@AppRoute(routes=routes, url='/copy-product/')
 class CopyProduct:
+    @Debug(name='CopyProduct')
     def __call__(self, request):
         request_params = request['request_params']
 
