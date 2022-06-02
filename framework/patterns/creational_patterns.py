@@ -1,10 +1,12 @@
 from copy import deepcopy
 from quopri import decodestring
+from patterns.behavioral_patterns import Subject
 
 
 # абстрактный пользователь
 class AbstractUser:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 
 # администратор
@@ -18,21 +20,24 @@ class Staff(AbstractUser):
 
 
 # все остальные пользователи
-class User(AbstractUser):
-    pass
+class Buyer(AbstractUser):
+
+    def __init__(self, name):
+        self.products = []
+        super().__init__(name)
 
 
 class UserFactory:
     types = {
         'admin': Admin,
         'staff': Staff,
-        'user': User
+        'buyer': Buyer
     }
 
     # порождающий паттерн Фабричный метод
     @classmethod
-    def create(cls, type_):
-        return cls.types[type_]()
+    def create(cls, type_, name):
+        return cls.types[type_](name)
 
 
 # порождающий паттерн Прототип
@@ -44,12 +49,22 @@ class ProductPrototype:
 
 
 #  продукт/товар
-class Product(ProductPrototype):
+class Product(ProductPrototype, Subject):
 
     def __init__(self, name, category):
         self.name = name
         self.category = category
         self.category.products.append(self)
+        self.buyers = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.buyers[item]
+
+    def add_buyer(self, buyer: Buyer):
+        self.buyers.append(buyer)
+        buyer.products.append(self)
+        self.notify()
 
 
 # продукт/товар в наличии
@@ -97,13 +112,13 @@ class Engine:
     def __init__(self):
         self.administrators = []
         self.staff = []
-        self.users = []
+        self.buyers = []
         self.products = []
         self.categories = []
 
     @staticmethod
-    def create_user(type_):
-        return UserFactory.create(type_)
+    def create_user(type_, name):
+        return UserFactory.create(type_, name)
 
     @staticmethod
     def create_category(name, category=None):
@@ -125,6 +140,11 @@ class Engine:
             if item.name == name:
                 return item
         return None
+
+    def get_buyer(self, name) -> Buyer:
+        for item in self.buyers:
+            if item.name == name:
+                return item
 
     @staticmethod
     def decode_value(val):
@@ -155,9 +175,11 @@ class SingletonByName(type):
 
 class Logger(metaclass=SingletonByName):
 
-    def __init__(self, name):
+    def __init__(self, name, writer):
         self.name = name
+        self.writer = writer
 
-    @staticmethod
-    def log(text):
+    # @staticmethod
+    def log(self, text):
         print('log--->', text)
+        self.writer.write(text)

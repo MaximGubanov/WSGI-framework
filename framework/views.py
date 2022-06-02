@@ -3,10 +3,14 @@ from datetime import date
 from simba_framework.templator import render
 from patterns.creational_patterns import Engine, Logger
 from patterns.structural_patterns import AppRoute, Debug
+from patterns.behavioral_patterns import EmailNotifier, SmsNotifier, ListView, CreateView, BaseSerializer, ConsoleWriter
 
 
 site = Engine()
-logger = Logger('main')
+logger = Logger('main', ConsoleWriter())
+email_notifier = EmailNotifier()
+sms_notifier = SmsNotifier()
+
 routes = {}
 
 
@@ -75,6 +79,10 @@ class CreateProduct:
                 category = site.find_category_by_id(int(self.category_id))
 
                 product = site.create_product('in_stock', name, category)
+
+                product.observers.append(email_notifier)
+                product.observers.append(sms_notifier)
+
                 site.products.append(product)
 
             return '200 OK', render('product_list.html',
@@ -156,3 +164,47 @@ class CopyProduct:
                                     name=new_product.category.name)
         except KeyError:
             return '200 OK', 'No products have been added yet'
+
+
+@AppRoute(routes=routes, url='/buyer-list/')
+class BuyerListView(ListView):
+    queryset = site.buyers
+    template_name = 'buyer_list.html'
+
+
+@AppRoute(routes=routes, url='/create-buyer/')
+class BuyerCreateView(CreateView):
+    template_name = 'create_buyer.html'
+
+    def create_obj(self, data: dict):
+        name = data['name']
+        name = site.decode_value(name)
+        new_obj = site.create_user('buyer', name)
+        site.buyers.append(new_obj)
+
+
+@AppRoute(routes=routes, url='/add-buyer/')
+class AddBuyerByProductCreateView(CreateView):
+    template_name = 'add_buyer.html'
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['products'] = site.products
+        context['buyers'] = site.buyers
+        return context
+
+    def create_obj(self, data: dict):
+        product_name = data['product_name']
+        product_name = site.decode_value(product_name)
+        product = site.get_product(product_name)
+        buyer_name = data['buyer_name']
+        buyer_name = site.decode_value(buyer_name)
+        buyer = site.get_buyer(buyer_name)
+        product.add_buyer(buyer)
+
+
+@AppRoute(routes=routes, url='/api/')
+class CourseApi:
+    @Debug(name='ProductApi')
+    def __call__(self, request):
+        return '200 OK', BaseSerializer(site.products).save()

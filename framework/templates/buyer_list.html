@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} Создание нового покупателя {% endblock %}
+
+{% block style %} {% include "inc-style.html" %} {% endblock %}
+
+{% block body %}
+	<div>
+		<li>
+			<a href="/create-buyer/">Создать покупаиеля</a>
+		</li>
+		<li>
+			<a href="/add-buyer/">Добавить покупателя</a>
+		</li>
+	</div>
+    <h1>Список покупателей</h1>
+    <div>
+        {% for item in objects_list %}
+        <li>
+            {{item.name}}
+            {% for course in item.courses %}
+                {{course.name}}
+            {% endfor %}
+        </li>
+        {% endfor %}
+    </div>
+{% endblock %}

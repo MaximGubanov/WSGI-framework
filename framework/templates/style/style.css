@@ -193,7 +193,7 @@ ul#menu li a:hover
 { color: #00C6EF;}
 
 #site_content
-{ width: 858px;
+{ width: 900px;
   overflow: hidden;
   margin: 0 auto 0 auto;
   padding: 10px 20px 20px 20px;
@@ -225,7 +225,7 @@ ul#menu li a:hover
 
 #content
 { text-align: left;
-  width: 613px;
+  width: 900px;
   padding: 0;}
 
 #content ul
@@ -239,7 +239,7 @@ ul#menu li a:hover
   line-height: 1.5em;}
 
 #footer
-{ width: 916px;
+{ width: 850px;
   font-family: 'trebuchet ms', sans-serif;
   font-size: 90%;
   height: 28px;
