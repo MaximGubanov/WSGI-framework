@@ -2,7 +2,6 @@
 <html lang="">
   <head>
     <meta charset="utf-8">
-    <title>Архитектура и шаблоны проектирования на Python</title>
   </head>
   <body>
     <header></header>
