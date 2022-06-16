@@ -1,4 +1,12 @@
-
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>Архитектура и шаблоны проектирования на Python</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
       <h1 class="title">Архитектура и шаблоны проектирования на Python</h1>
       <ol>
         <li>Паттерны web-представления</li>
@@ -13,3 +21,7 @@
       </ol>
       <p><span>Результат:</span> итоговый проект - WSGI-framework, содержит шаблонизатор jinja2,
         собственная ORM, при написании кода использовались извесные паттерны для понимания структур приложений</p>
+    </main>
+    <footer></footer>
+  </body>
+</html>
